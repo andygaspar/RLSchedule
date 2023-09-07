@@ -1,8 +1,9 @@
 import numpy as np
 import pandas as pd
 import gurobipy as gb
+import scipy
 
-df_flights = pd.read_csv('flights_complete.txt')
+df_flights = pd.read_csv('Hotspot_Dataframes/flights_complete.csv')
 df_f = df_flights[df_flights.Destination == 'EHAM'].copy(deep=True)
 df_f.sort_values(by=['arr_day', 'arr_min'], inplace=True)
 
@@ -42,7 +43,7 @@ m.optimize()
 df_f.loc[df_f.arr_day == 1, 'new_time'] = (x.x * new_arr_time).sum(axis=1)
 df_day = df_f[df_f.arr_day == 1]
 
-
+df_f.to_csv('flights.csv', index_label=False, index=False)
 
 
 # (x.x*new_arr_time).sum(axis=1)
@@ -50,3 +51,9 @@ df_day = df_f[df_f.arr_day == 1]
 # df_day.arr_min
 # days = df_f.arr_day.unique()
 # print(z.x)
+
+
+# from CostPackage.arrival_costs import *
+#
+# cost_fun_mc_1 = get_cost_model(aircraft_type="A320", is_low_cost=False, destination="EGLL", n_passengers=170, length=800,
+#                                missed_connected=[(20, 300) for _ in range(20)], curfew=30)

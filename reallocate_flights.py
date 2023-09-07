@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import gurobipy as gb
 
-df_flights = pd.read_csv('flights_complete.txt')
+df_flights = pd.read_csv('Hotspot_Dataframes/flights_complete.csv')
 df_f = df_flights[df_flights.Destination == 'EHAM'].copy(deep=True)
 df_f.sort_values(by=['arr_day', 'arr_min'], inplace=True)
 df_f['new_time'] = -1
@@ -34,6 +34,8 @@ for day in days:
     m.optimize()
     df_f.loc[df_f.arr_day == day, 'new_time'] = (x.x * new_arr_time).sum(axis=1)
 
+
+df_f.new_time = df_f.new_time.astype(int)
 df_f.to_csv('flights.csv', index_label=False, index=False)
 
 
