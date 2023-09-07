@@ -36,6 +36,8 @@ for day in days:
 
 
 df_f.new_time = df_f.new_time.astype(int)
+low_cost = pd.read_csv('Hotspot_Dataframes/low_cost.csv')
+df['is_low'] = df.Company.apply(lambda airline: airline in low_cost.airline.tolist())
 df_f.to_csv('flights.csv', index_label=False, index=False)
 
 
