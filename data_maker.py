@@ -5,8 +5,8 @@ import numpy as np
 import pandas as pd
 from CostPackage.arrival_costs import get_cost_model, get_data_dict
 
-from curfew import get_curfew_threshold
-from curfew import get_flight_length
+from curfew_old import get_curfew_threshold
+from curfew_old import get_flight_length
 
 df_airline = pd.read_csv("Hotspot_Dataframes/airport_airline_frequency.csv")
 aircraft_seats = get_data_dict()["aircraft_seats"]
